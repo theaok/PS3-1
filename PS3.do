@@ -22,7 +22,7 @@ https://www.epa.gov/outdoor-air-quality-data/air-quality-statistics-report
 6- The third dataset is from the Food Access and Research Center (FARC) and it is County SNAP (food stamp) usage from 2011-2015 and simply shows the use of the Supplemental Nutrition Assistance Program. 
 7- The fourth dataset is from the US Census Bureau and it contains population counts by County for 2010-2016 https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?src=bkmk
 */ 
-
+//again, nice clean strucuture
 
 /*_________________________________________________________________________
 
@@ -51,6 +51,11 @@ generate region=0
 replace region=1 if County=="Burlington" | County=="Camden" | County=="Gloucester" | County=="Salem" | County=="Cumberland" | County=="Atlantic" | County=="Cape May" 
  //region==2 means central
 replace region=2 if County=="Hunterdon" | County=="Somerset" | County=="Middlesex" | County=="Monmouth" | County=="Ocean" | County=="Mercer" 
+//just label them
+label define re 0 `"north"', modify 
+label define re 1 `"south"', modify 
+la val region re
+
 move region County 
 save kate_ps3toxic, replace 
 
@@ -86,7 +91,9 @@ move region County
 save kate_ps3pollution, replace 
 
 //County SNAP usage
+
 import excel "https://docs.google.com/uc?id=0B1opnkI-LLCicWZRS3c2MFhianM&export=download", clear firstrow 
+//no dangerous! better like replace County="Atlantic" if County=="Atlantic County" //or better yet use string functions, i think next class 
 replace County = "Passaic" in 1
 replace County = "Cumberland" in 2 
 replace County = "Essex" in 3
